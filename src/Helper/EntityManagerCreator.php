@@ -11,7 +11,7 @@ class EntityManagerCreator
     {
         $isDevMode = true;
         $config = ORMSetup::createAttributeMetadataConfiguration(
-            array(__DIR__ . "/src"),
+            [__DIR__ . "/.."],
             $isDevMode,
         );
 
