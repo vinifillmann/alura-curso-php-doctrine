@@ -17,7 +17,7 @@ class Student
 
     public function __construct(string $name)
     {
-        $this->nome = $name;
+        $this->name = $name;
     }
 
     public function getId(): int
