@@ -29,4 +29,11 @@ class Student
     {
         return $this->name;
     }
+
+    public function setName(string $newName): void
+    {
+        if (trim($newName)) {
+            $this->name = $newName;
+        }
+    }
 }
