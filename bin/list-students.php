@@ -11,6 +11,8 @@ $studentRepository = $entityManager->getRepository(Student::class);
 
 $studentList = $studentRepository->findAll();
 
+echo PHP_EOL;
+
 foreach ($studentList as $student) {
     $id = $student->getId();
     $name = $student->getName();
@@ -19,7 +21,7 @@ foreach ($studentList as $student) {
 
     echo implode(", ", $student->phones()->map(fn (Phone $phone) => $phone->getNumber())->toArray());
 
-    echo PHP_EOL;
+    echo PHP_EOL . PHP_EOL;
 }
 
 echo $studentRepository->count([]) . PHP_EOL;

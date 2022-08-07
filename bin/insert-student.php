@@ -8,11 +8,14 @@ use Alura\Doctrine\Helper\EntityManagerCreator;
 
 $entityManager = EntityManagerCreator::createEntityManager();
 
-$telefone = new Phone("(51) 9 9936-4030");
-$entityManager->persist($telefone);
+$student = new Student($argv[1]);
 
-$student = new Student("Aluno com telefone");
-$student->addPhone($telefone);
+for ($i = 2; $i < sizeof($argv); $i++) {
+    $numero = $argv[$i];
+    if ($numero) {
+        $student->addPhone(new Phone($numero));
+    }
+}
 
 $entityManager->persist($student);
 $entityManager->flush();

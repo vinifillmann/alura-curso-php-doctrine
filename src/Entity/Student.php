@@ -4,7 +4,7 @@ namespace Alura\Doctrine\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\{Entity, Column, Id, GeneratedValue, OneToMany};
+use Doctrine\ORM\Mapping\{Entity, Column, Id, GeneratedValue, ManyToMany, OneToMany};
 
 #[Entity]
 class Student
@@ -12,8 +12,11 @@ class Student
     #[Id, GeneratedValue, Column]
     private int $id;
 
-    #[OneToMany("student",targetEntity: Phone::class)]
+    #[OneToMany("student",targetEntity: Phone::class, cascade: ["persist", "remove"])]
     private Collection $phones;
+
+    #[ManyToMany(Course::class, "students")]
+    private Collection $courses;
 
     #[Column]
     private string $name;
@@ -23,6 +26,7 @@ class Student
     {
         $this->name = $name;
         $this->phones = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function addPhone(Phone $phone): void
@@ -34,6 +38,21 @@ class Student
     public function phones(): Collection
     {
         return $this->phones;
+    }
+
+    public function courses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function enrollInCourse(Course $course): void
+    {
+        if ($this->courses->contains($course)) {
+            return;
+        }
+        
+        $this->courses->add($course);
+        $course->addStudent($this);
     }
 
     public function getId(): int
