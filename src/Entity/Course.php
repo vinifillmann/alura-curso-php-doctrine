@@ -27,7 +27,7 @@ class Course
         if ($this->students->contains($student)) {
             return;
         }
-        
+
         $this->students->add($student);
         $student->enrollInCourse($this);
     }

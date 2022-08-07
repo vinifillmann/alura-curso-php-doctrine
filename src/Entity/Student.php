@@ -15,7 +15,7 @@ class Student
     #[OneToMany("student",targetEntity: Phone::class, cascade: ["persist", "remove"])]
     private Collection $phones;
 
-    #[ManyToMany(Course::class, "students")]
+    #[ManyToMany(Course::class, inversedBy: "students")]
     private Collection $courses;
 
     #[Column]
@@ -50,7 +50,7 @@ class Student
         if ($this->courses->contains($course)) {
             return;
         }
-        
+
         $this->courses->add($course);
         $course->addStudent($this);
     }

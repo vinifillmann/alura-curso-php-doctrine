@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use Alura\Doctrine\Entity\{Student, Phone};
+use Alura\Doctrine\Entity\{Course, Student, Phone};
 use Alura\Doctrine\Helper\EntityManagerCreator;
 
 
@@ -17,9 +17,17 @@ foreach ($studentList as $student) {
     $id = $student->getId();
     $name = $student->getName();
     echo "ID: {$id}\nNome: {$name}\n";
-    echo "Telefones: ";
 
-    echo implode(", ", $student->phones()->map(fn (Phone $phone) => $phone->getNumber())->toArray());
+    if ($student->phones()->count() > 0) {
+        echo "Telefones: ";
+        echo implode(", ", $student->phones()->map(fn (Phone $phone) => $phone->getNumber())->toArray());
+        echo PHP_EOL;
+    }
+    
+    if ($student->courses()->count() > 0) {
+        echo "Cursos: ";
+        echo implode(", ", $student->courses()->map(fn (Course $course) => $course->getName())->toArray());
+    }
 
     echo PHP_EOL . PHP_EOL;
 }
